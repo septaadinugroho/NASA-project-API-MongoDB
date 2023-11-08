@@ -1,6 +1,7 @@
 //pake http dan express karna menjadikan express sbg middlewarenya
 const http = require("http"); //import http
 const app = require("./app"); //import app.js
+const { mongoConnect } = require("./services/mongo"); //import dari mongo.js
 const { loadPlanetsData } = require("./models/planets.model"); //import function loadPlanetsData
 
 const PORT = process.env.PORT || 8000; //untuk mengetahui environtmen pengakses
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 8000; //untuk mengetahui environtmen pengakses
 const server = http.createServer(app); //membuat server
 
 async function startServer() {
+  await mongoConnect();
   await loadPlanetsData();
 
   server.listen(PORT, () => {
